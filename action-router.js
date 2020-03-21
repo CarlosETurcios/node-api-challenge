@@ -12,17 +12,10 @@ router.get('/', (req, res) => {
       res.status(500).json({ message: 'Error retriving action' });
     });
 });
-router.post('/:id/actions', (req, res) => {
-  const action = req.body;
-  const id = req.params.id;
-  action.project_id = id;
-  am.insert(action)
+router.post('/', (req, res) => {
+  am.insert(req.body)
     .then(actions => {
-      if (action) {
-        res.status(201).json(action);
-      } else {
-        res.status(404).json({ message: 'actions not found' });
-      }
+      res.status(201).json({ actions });
     })
     .catch(err => {
       console.log(err);
